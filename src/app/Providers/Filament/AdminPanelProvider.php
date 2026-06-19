@@ -50,6 +50,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([
                 \Awcodes\Overlook\Widgets\OverlookWidget::class,
+                \App\Filament\Admin\Widgets\BookingStats::class,
+                \App\Filament\Admin\Widgets\RevenueChart::class,
             ])
             ->navigationGroups([
                 NavigationGroup::make()
