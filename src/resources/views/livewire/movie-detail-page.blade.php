@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-slate-950 text-white">
 
-```
+
 <div class="max-w-7xl mx-auto">
 
     {{-- Banner --}}
@@ -186,6 +186,6 @@
     </div>
 
 </div>
-```
+
 
 </div>

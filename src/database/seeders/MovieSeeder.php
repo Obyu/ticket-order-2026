@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -11,44 +12,59 @@ class MovieSeeder extends Seeder
     public function run(): void
     {
         $movies = [
-            [
-                'title' => 'Avengers Endgame',
-                'duration' => 181,
-                'rating' => '8.5',
-            ],
-            [
-                'title' => 'The Batman',
-                'duration' => 176,
-                'rating' => '8.0',
-            ],
-            [
-                'title' => 'Interstellar',
-                'duration' => 169,
-                'rating' => '8.7',
-            ],
-            [
-                'title' => 'John Wick 4',
-                'duration' => 169,
-                'rating' => '8.2',
-            ],
+
+            'Avengers Endgame',
+            'Interstellar',
+            'John Wick 4',
+            'Top Gun Maverick',
+            'Oppenheimer',
+            'Joker',
+            'The Batman',
+            'Fast X',
+            'Mission Impossible',
+            'Doctor Strange',
+
         ];
 
-        foreach ($movies as $movie) {
+        foreach ($movies as $index => $title) {
 
-            Movie::firstOrCreate(
-                [
-                    'slug' => Str::slug($movie['title']),
-                ],
-                [
-                    'title' => $movie['title'],
-                    'poster' => null,
-                    'banner' => null,
-                    'trailer_url' => 'https://youtube.com',
-                    'duration' => $movie['duration'],
-                    'rating' => $movie['rating'],
-                    'is_showing' => true,
-                    'synopsis' => 'Demo synopsis movie.',
-                ]
+            $movie = Movie::create([
+
+                'title' => $title,
+
+                'slug' => Str::slug($title),
+
+                'poster' =>
+                    "https://picsum.photos/400/600?random="
+                    . ($index + 1),
+
+                'banner' =>
+                    "https://picsum.photos/1200/500?random="
+                    . ($index + 100),
+
+                'trailer_url' =>
+                    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+
+                'synopsis' =>
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in libero vel purus malesuada viverra.',
+
+                'duration' =>
+                    rand(90, 180),
+
+                'rating' =>
+                    rand(70, 95) / 10,
+
+                'is_showing' =>
+                    true,
+            ]);
+
+            $genreIds = Genre::query()
+                ->inRandomOrder()
+                ->limit(rand(1, 3))
+                ->pluck('id');
+
+            $movie->genres()->attach(
+                $genreIds
             );
         }
     }
